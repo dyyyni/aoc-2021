@@ -9,16 +9,24 @@ def isBingo(board):
             return True
     return False
 
+def notMarkedSum(board):
+    sum = 0
+    for i in range(5):
+        for j in range(5):
+            if board[i][j] > -1:
+                sum += board[i][j]
+    return sum
+
+
+
 
 def main():
-
     matrix = np.loadtxt("boards.txt", usecols=range(5),dtype=int)
     boards = np.vsplit(matrix, 100)
     nums = np.genfromtxt("numbers.txt", delimiter=",", dtype=int)
 
     winningBoard = None
     lastNumber = None
-
     for num in nums:
         for i in range(len(boards)):
             boards[i] = np.where(boards[i] == num, -1, boards[i])
@@ -30,8 +38,6 @@ def main():
         else:
             continue
         break
-
-    print(winningBoard)
-    print(lastNumber)
+    print(notMarkedSum(winningBoard)*lastNumber)
 
 main()
